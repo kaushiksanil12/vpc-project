@@ -17,6 +17,7 @@ const pool = new pg.Pool({
     database: process.env.DB_NAME || 'postgres',
     password: process.env.DB_PASSWORD || 'password',
     port: process.env.DB_PORT || 5432,
+    ssl: process.env.DB_SSL === 'true' ? { rejectUnauthorized: false } : false,
 });
 
 app.get('/api/status', async (req, res) => {

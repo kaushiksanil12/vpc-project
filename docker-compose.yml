@@ -1,16 +1,6 @@
 version: '3.8'
 
 services:
-  db:
-    image: postgres:15-alpine
-    container_name: basic_postgres
-    environment:
-      POSTGRES_USER: database-1.coxwukq4kdkr.us-east-1.rds.amazonaws.com
-      POSTGRES_PASSWORD: kau_(shik)*1
-      POSTGRES_DB: postgres
-    ports:
-      - "5432:5432"
-
   server:
     build: ./server
     container_name: basic_backend
@@ -19,12 +9,11 @@ services:
     environment:
       PORT: 3000
       DB_USER: postgres
-      DB_HOST: db
+      DB_HOST: database-1.coxwukq4kdkr.us-east-1.rds.amazonaws.com
       DB_NAME: postgres
-      DB_PASSWORD: password
+      DB_PASSWORD: "kau_(shik)*1"
       DB_PORT: 5432
-    depends_on:
-      - db
+      DB_SSL: "true"
 
   client:
     build: ./client
@@ -33,6 +22,3 @@ services:
       - "80:80"
     depends_on:
       - server
-
-volumes:
-  pgdata:
