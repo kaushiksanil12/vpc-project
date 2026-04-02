@@ -10,7 +10,7 @@ function App() {
   const [editingUserId, setEditingUserId] = useState(null)
   const [formError, setFormError] = useState(null)
 
-  const API_URL = 'http://localhost:3000/api'
+  const API_URL = '/api'
 
   const fetchStatus = () => {
     fetch(`${API_URL}/status`)
