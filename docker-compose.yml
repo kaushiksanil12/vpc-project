@@ -5,14 +5,11 @@ services:
     image: postgres:15-alpine
     container_name: basic_postgres
     environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: password
+      POSTGRES_USER: database-1.coxwukq4kdkr.us-east-1.rds.amazonaws.com
+      POSTGRES_PASSWORD: kau_(shik)*1
       POSTGRES_DB: postgres
     ports:
       - "5432:5432"
-    volumes:
-      - pgdata:/var/lib/postgresql/data
-      - ./database/init.sql:/docker-entrypoint-initdb.d/init.sql
 
   server:
     build: ./server
