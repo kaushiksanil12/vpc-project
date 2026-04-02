@@ -20,6 +20,32 @@ const pool = new pg.Pool({
     ssl: process.env.DB_SSL === 'true' ? { rejectUnauthorized: false } : false,
 });
 
+const initDb = async () => {
+    try {
+        const client = await pool.connect();
+        await client.query(`
+            CREATE TABLE IF NOT EXISTS users (
+                id SERIAL PRIMARY KEY,
+                name VARCHAR(100) NOT NULL,
+                email VARCHAR(100) UNIQUE NOT NULL,
+                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+            );
+
+            INSERT INTO users (name, email) VALUES 
+            ('Alice Smith', 'alice@example.com'),
+            ('Bob Jones', 'bob@example.com'),
+            ('Charlie Brown', 'charlie@example.com')
+            ON CONFLICT (email) DO NOTHING;
+        `);
+        console.log('Database tables initialized successfully');
+        client.release();
+    } catch (err) {
+        console.error('Failed to initialize database tables:', err);
+    }
+};
+
+initDb();
+
 app.get('/api/status', async (req, res) => {
     try {
         const client = await pool.connect();
